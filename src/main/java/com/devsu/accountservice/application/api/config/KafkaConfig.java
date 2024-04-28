@@ -35,18 +35,18 @@ public class KafkaConfig {
     }
 
     @Bean
-    public ConsumerFactory<String, SolicitudMovimiento> consumerFactory() {
-        Map<String, Object> configProps = new HashMap<>();
-        configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-        // Configuración para deserializar JSON a RespuestaMovimiento
-        configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, SolicitudMovimientoSerializer.class);
-        return new DefaultKafkaConsumerFactory<>(configProps, new StringDeserializer(),
-                new JsonDeserializer<>(SolicitudMovimiento.class));
+    public KafkaTemplate<String, RespuestaMovimiento> respuestaKafkaTemplate() {
+        return new KafkaTemplate<>(producerFactory());
     }
 
     @Bean
-    public KafkaTemplate<String, RespuestaMovimiento> respuestaKafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory());
+    public ConsumerFactory<String, SolicitudMovimiento> consumerFactory() {
+        Map<String, Object> configProps = new HashMap<>();
+        configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        // Configuración para deserializar JSON a SolicitudMovimientoSerializer
+        configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, SolicitudMovimientoSerializer.class);
+        return new DefaultKafkaConsumerFactory<>(configProps, new StringDeserializer(),
+                new JsonDeserializer<>(SolicitudMovimiento.class));
     }
 
     @Bean

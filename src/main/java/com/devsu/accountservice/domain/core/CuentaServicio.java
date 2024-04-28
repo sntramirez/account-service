@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -31,13 +32,14 @@ public class CuentaServicio {
 
     @KafkaListener(topics = "topic-solicitudes-movimiento", groupId = "grupo-cuentas")
     public void procesarSolicitudMovimiento(SolicitudMovimiento solicitud) {
+
         Cuenta cuenta = cuentaRepository.findByNumeroCuenta(solicitud.getNumeroCuenta());
         List<Movimiento> movimientos = movimientoRepository.findByCuenta(cuenta.getId());
         BigDecimal nuevoSaldo = BigDecimal.ZERO;
         if(movimientos.isEmpty()){
-             nuevoSaldo = cuenta.getSaldoInicial().add( solicitud.getValor() );
+            nuevoSaldo = cuenta.getSaldoInicial().add( solicitud.getValor() );
         }else {
-            nuevoSaldo = movimientos.get(0).getSaldo();
+            nuevoSaldo = solicitud.getValor().add(movimientos.get(0).getSaldo());
         }
 
         RespuestaMovimiento respuesta = new RespuestaMovimiento();
@@ -57,7 +59,7 @@ public class CuentaServicio {
             //cuenta.setSaldoInicial(nuevoSaldo);
             cuentaRepository.save(cuenta);
 
-            movimiento.setFecha(new Date(new java.util.Date().getTime()));
+            movimiento.setFecha(LocalDate.now());
             movimientoRepository.save(movimiento);
 
             respuesta.setExito(true);

@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -24,7 +25,7 @@ public class Movimiento {
     private Cuenta cuenta;
 
     @Column(name = "fecha")
-    private Date fecha;
+    private LocalDate fecha;
 
     @Column(name = "tipo_movimiento")
     private String tipoMovimiento;
