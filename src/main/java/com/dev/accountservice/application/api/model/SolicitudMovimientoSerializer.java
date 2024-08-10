@@ -1,4 +1,4 @@
-package com.devsu.accountservice.application.api.model;
+package com.dev.accountservice.application.api.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.common.serialization.Serializer;

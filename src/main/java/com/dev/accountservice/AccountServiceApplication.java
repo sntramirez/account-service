@@ -1,6 +1,6 @@
-package com.devsu.accountservice;
+package com.dev.accountservice;
 
-import com.devsu.accountservice.infraestructure.data.entities.Cuenta;
+import com.dev.accountservice.infraestructure.data.entities.Cuenta;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;

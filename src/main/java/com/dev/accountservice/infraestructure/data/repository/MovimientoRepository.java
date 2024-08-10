@@ -1,8 +1,7 @@
-package com.devsu.accountservice.infraestructure.data.repository;
+package com.dev.accountservice.infraestructure.data.repository;
 
-import com.devsu.accountservice.infraestructure.data.entities.Cuenta;
-import com.devsu.accountservice.infraestructure.data.entities.Movimiento;
-import com.devsu.accountservice.infraestructure.data.entities.QMovimiento;
+import com.dev.accountservice.infraestructure.data.entities.Movimiento;
+import com.dev.accountservice.infraestructure.data.entities.QMovimiento;
 import com.querydsl.core.types.dsl.StringExpression;
 import com.querydsl.core.types.dsl.StringPath;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,7 +14,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;

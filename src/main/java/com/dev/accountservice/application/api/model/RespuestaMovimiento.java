@@ -1,4 +1,4 @@
-package com.devsu.accountservice.application.api.model;
+package com.dev.accountservice.application.api.model;
 
 import lombok.Getter;
 import lombok.Setter;

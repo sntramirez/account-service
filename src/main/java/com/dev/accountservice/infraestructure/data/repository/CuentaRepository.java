@@ -1,7 +1,7 @@
-package com.devsu.accountservice.infraestructure.data.repository;
+package com.dev.accountservice.infraestructure.data.repository;
 
-import com.devsu.accountservice.infraestructure.data.entities.Cuenta;
-import com.devsu.accountservice.infraestructure.data.entities.QCuenta;
+import com.dev.accountservice.infraestructure.data.entities.Cuenta;
+import com.dev.accountservice.infraestructure.data.entities.QCuenta;
 import com.querydsl.core.types.dsl.StringExpression;
 import com.querydsl.core.types.dsl.StringPath;
 import org.springframework.data.jpa.repository.JpaRepository;

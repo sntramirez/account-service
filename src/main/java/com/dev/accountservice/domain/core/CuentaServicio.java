@@ -1,11 +1,11 @@
-package com.devsu.accountservice.domain.core;
+package com.dev.accountservice.domain.core;
 
-import com.devsu.accountservice.application.api.model.RespuestaMovimiento;
-import com.devsu.accountservice.application.api.model.SolicitudMovimiento;
-import com.devsu.accountservice.infraestructure.data.entities.Cuenta;
-import com.devsu.accountservice.infraestructure.data.entities.Movimiento;
-import com.devsu.accountservice.infraestructure.data.repository.CuentaRepository;
-import com.devsu.accountservice.infraestructure.data.repository.MovimientoRepository;
+import com.dev.accountservice.application.api.model.RespuestaMovimiento;
+import com.dev.accountservice.application.api.model.SolicitudMovimiento;
+import com.dev.accountservice.infraestructure.data.entities.Cuenta;
+import com.dev.accountservice.infraestructure.data.entities.Movimiento;
+import com.dev.accountservice.infraestructure.data.repository.CuentaRepository;
+import com.dev.accountservice.infraestructure.data.repository.MovimientoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -13,9 +13,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service

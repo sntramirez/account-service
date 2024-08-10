@@ -1,4 +1,4 @@
-package com.devsu.accountservice.infraestructure.data.entities;
+package com.dev.accountservice.infraestructure.data.entities;
 
 import lombok.Getter;
 import lombok.Setter;

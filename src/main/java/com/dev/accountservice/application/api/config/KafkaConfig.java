@@ -1,9 +1,9 @@
-package com.devsu.accountservice.application.api.config;
+package com.dev.accountservice.application.api.config;
 
-import com.devsu.accountservice.application.api.model.RespuestaMovimiento;
-import com.devsu.accountservice.application.api.model.RespuestaMovimientoSerializer;
-import com.devsu.accountservice.application.api.model.SolicitudMovimiento;
-import com.devsu.accountservice.application.api.model.SolicitudMovimientoSerializer;
+import com.dev.accountservice.application.api.model.RespuestaMovimiento;
+import com.dev.accountservice.application.api.model.RespuestaMovimientoSerializer;
+import com.dev.accountservice.application.api.model.SolicitudMovimiento;
+import com.dev.accountservice.application.api.model.SolicitudMovimientoSerializer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
