@@ -1,9 +1,9 @@
 package com.dev.accountservice.application.api.config;
 
-import com.dev.accountservice.application.api.model.RespuestaMovimiento;
-import com.dev.accountservice.application.api.model.RespuestaMovimientoSerializer;
-import com.dev.accountservice.application.api.model.SolicitudMovimiento;
-import com.dev.accountservice.application.api.model.SolicitudMovimientoSerializer;
+import com.dev.accountservice.domain.core.model.RespuestaMovimiento;
+import com.dev.accountservice.domain.core.model.RespuestaMovimientoSerializer;
+import com.dev.accountservice.domain.core.model.SolicitudCreacionCuenta;
+import com.dev.accountservice.domain.core.model.SolicitudCreacionCuentaSerializer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -40,19 +40,19 @@ public class KafkaConfig {
     }
 
     @Bean
-    public ConsumerFactory<String, SolicitudMovimiento> consumerFactory() {
+    public ConsumerFactory<String, SolicitudCreacionCuenta> consumerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         // Configuración para deserializar JSON a SolicitudMovimientoSerializer
-        configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, SolicitudMovimientoSerializer.class);
+        configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, SolicitudCreacionCuentaSerializer.class);
         return new DefaultKafkaConsumerFactory<>(configProps, new StringDeserializer(),
-                new JsonDeserializer<>(SolicitudMovimiento.class));
+                new JsonDeserializer<>(SolicitudCreacionCuenta.class));
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, SolicitudMovimiento>
+    public ConcurrentKafkaListenerContainerFactory<String, SolicitudCreacionCuenta>
     kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, SolicitudMovimiento> factory =
+        ConcurrentKafkaListenerContainerFactory<String, SolicitudCreacionCuenta> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;

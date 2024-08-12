@@ -7,7 +7,7 @@ import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
-@SpringBootApplication( scanBasePackages = {"com.devsu"})
+@SpringBootApplication( scanBasePackages = {"com.dev"})
 public class AccountServiceApplication implements RepositoryRestConfigurer  {
 
     public static void main(String[] args) {

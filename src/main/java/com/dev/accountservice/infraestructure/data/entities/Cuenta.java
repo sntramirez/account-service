@@ -19,8 +19,11 @@ public class Cuenta {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "numero_cuenta" , nullable = false)
+    @Column(name = "numero_cuenta", unique = true, nullable = false)
     private String numeroCuenta;
+
+    @Column(name = "cliente_id")
+    private Long clienteId;
 
     @Column(name = "tipo_cuenta" , nullable = false)
     private String tipoCuenta;

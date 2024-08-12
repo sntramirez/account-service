@@ -18,7 +18,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 import java.util.List;
 
-@RepositoryRestResource(path = "movimientos", collectionResourceRel = "movimientos")
+@RepositoryRestResource(path = "movimientos-api", collectionResourceRel = "movimientos")
 public interface MovimientoRepository extends JpaRepository<Movimiento, Long>,
         QuerydslPredicateExecutor<Movimiento>, QuerydslBinderCustomizer<QMovimiento> {
 
