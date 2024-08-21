@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.*;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,10 +21,13 @@ import java.util.Map;
 @Configuration
 public class KafkaConfig {
 
+    @Value("${kafka.bootstrap-servers}")
+    private String bootstrapServers;
+
     @Bean
     public ProducerFactory<String, RespuestaMovimiento> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
-        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         configProps.put(ProducerConfig.ACKS_CONFIG, "1");
         configProps.put(ProducerConfig.LINGER_MS_CONFIG, 5);
         configProps.put(ProducerConfig.RETRIES_CONFIG, 1);
@@ -42,7 +46,7 @@ public class KafkaConfig {
     @Bean
     public ConsumerFactory<String, SolicitudCreacionCuenta> consumerFactory() {
         Map<String, Object> configProps = new HashMap<>();
-        configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         // Configuración para deserializar JSON a SolicitudMovimientoSerializer
         configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, SolicitudCreacionCuentaSerializer.class);
         return new DefaultKafkaConsumerFactory<>(configProps, new StringDeserializer(),
