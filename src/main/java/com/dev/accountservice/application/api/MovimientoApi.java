@@ -4,6 +4,7 @@ import com.dev.accountservice.domain.core.model.MovimientoDto;
 import com.dev.accountservice.domain.core.MovimientoServicio;
 import com.dev.accountservice.domain.core.model.RespuestaMovimiento;
 import com.dev.accountservice.domain.core.model.SaldoNoDisponibleException;
+import com.dev.accountservice.domain.core.model.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,21 +28,8 @@ public class MovimientoApi {
     MovimientoServicio movimientoServicio;
 
     @PostMapping
-    public ResponseEntity<?> crearMovimiento(@Valid @RequestBody MovimientoDto movimiento, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            List<String> errors = bindingResult.getFieldErrors().stream()
-                    .map(error -> error.getField() + ": " + error.getDefaultMessage())
-                    .collect(Collectors.toList());
-            return ResponseEntity.badRequest().body(errors);
-        }
+    public ResponseEntity<?> crearMovimiento(@Valid @RequestBody MovimientoDto movimiento) {
+        return ResponseEntity.ok(movimientoServicio.crearMovimento(movimiento));
 
-        try {
-            RespuestaMovimiento nuevoMovimiento = movimientoServicio.crearMovimento(movimiento);
-            return ResponseEntity.ok(nuevoMovimiento);
-        } catch (SaldoNoDisponibleException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
     }
 }
