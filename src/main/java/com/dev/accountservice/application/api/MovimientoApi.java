@@ -1,7 +1,7 @@
 package com.dev.accountservice.application.api;
 
 
-import com.dev.accountservice.application.services.MovimientoServicio;
+import com.dev.accountservice.application.services.MovimientoApplicationService;
 import com.dev.accountservice.domain.core.model.MovimientoDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +19,11 @@ import javax.validation.Valid;
 public class MovimientoApi {
 
     @Autowired
-    MovimientoServicio movimientoServicio;
+    MovimientoApplicationService movimientoApplicationService;
 
     @PostMapping
     public ResponseEntity<?> crearMovimiento(@Valid @RequestBody MovimientoDto movimiento) {
-        return ResponseEntity.ok(movimientoServicio.crearMovimento(movimiento));
+        return ResponseEntity.ok(movimientoApplicationService.crearMovimento(movimiento));
 
     }
 }

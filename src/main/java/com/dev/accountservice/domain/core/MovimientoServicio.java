@@ -2,7 +2,8 @@ package com.dev.accountservice.domain.core;
 
 import com.dev.accountservice.domain.core.model.MovimientoDto;
 import com.dev.accountservice.domain.core.model.RespuestaMovimiento;
-import com.dev.accountservice.domain.core.model.SaldoNoDisponibleException;
+import com.dev.accountservice.exceptions.CuentaNoDisponibleException;
+import com.dev.accountservice.exceptions.SaldoNoDisponibleException;
 import com.dev.accountservice.domain.core.ports.MovimientoPort;
 import com.dev.accountservice.infraestructure.data.entities.Cuenta;
 import com.dev.accountservice.infraestructure.data.entities.Movimiento;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MovimientoServicio implements MovimientoPort {
@@ -31,22 +33,33 @@ public class MovimientoServicio implements MovimientoPort {
     @Override
     public RespuestaMovimiento crearMovimento(MovimientoDto movimientoDto) {
 
-        Cuenta cuenta = cuentaRepository.findByNumeroCuenta(movimientoDto.getNumeroCuenta());
+        RespuestaMovimiento respuesta = new RespuestaMovimiento();
+        respuesta.setNumeroCuenta(movimientoDto.getNumeroCuenta());
+        respuesta.setExito(true);
+        respuesta.setMensaje("Movimiento realizado con éxito");
+
+        // Verificar si ya existe una transacción con el mismo idempotencyKey
+        Optional<Movimiento> existingTransaction = movimientoRepository.findByIdempotenciaClave(movimientoDto.getIdempotenciaClave());
+
+        if (existingTransaction.isPresent()) {
+            return respuesta;
+        }
+
+        Optional <Cuenta> cuentaOpcional = cuentaRepository.findByNumeroCuenta(movimientoDto.getNumeroCuenta());
+        if (!cuentaOpcional.isPresent()){
+            throw new CuentaNoDisponibleException("Cuenta no disponible");
+        }
+        Cuenta cuenta = cuentaOpcional.get();
+
         List<Movimiento> movimientos = movimientoRepository.findByCuenta(cuenta.getId());
-        BigDecimal nuevoSaldo = BigDecimal.ZERO;
+        BigDecimal nuevoSaldo;
         if(movimientos.isEmpty()){
             nuevoSaldo = cuenta.getSaldoInicial().add( movimientoDto.getValor() );
         }else {
             nuevoSaldo = movimientoDto.getValor().add(movimientos.get(0).getSaldo());
         }
 
-        RespuestaMovimiento respuesta = new RespuestaMovimiento();
-        respuesta.setNumeroCuenta(movimientoDto.getNumeroCuenta());
-
         if (nuevoSaldo.compareTo(BigDecimal.ZERO ) < 0) {
-            // Saldo insuficiente
-            respuesta.setExito(false);
-            respuesta.setMensaje("Saldo no disponible");
             throw new SaldoNoDisponibleException("Saldo no disponible para realizar el retiro");
         } else {
             // Procesar el movimiento
@@ -55,14 +68,10 @@ public class MovimientoServicio implements MovimientoPort {
             movimiento.setTipoMovimiento(movimientoDto.getTipoMovimiento());
             movimiento.setValor(movimientoDto.getValor());
             movimiento.setSaldo(nuevoSaldo);
-            //cuenta.setSaldoInicial(nuevoSaldo);
             cuentaRepository.save(cuenta);
-
             movimiento.setFecha(LocalDate.now());
+            movimiento.setIdempotenciaClave(movimientoDto.getIdempotenciaClave());
             movimientoRepository.save(movimiento);
-
-            respuesta.setExito(true);
-            respuesta.setMensaje("Movimiento realizado con éxito");
         }
 
         return respuesta;

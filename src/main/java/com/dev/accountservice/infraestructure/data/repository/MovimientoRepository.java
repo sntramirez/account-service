@@ -18,6 +18,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RepositoryRestResource(path = "movimientos-api", collectionResourceRel = "movimientos")
 public interface MovimientoRepository extends JpaRepository<Movimiento, Long>,
@@ -43,13 +44,10 @@ public interface MovimientoRepository extends JpaRepository<Movimiento, Long>,
     List<Movimiento> findByCuentaFecha(@Param("cuentaId") Long cuentaId, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createDateFrom,
                                        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createDateTo);
 
-    @RestResource(exported = false)
+    Optional<Movimiento> findByIdempotenciaClave(String idempotenciaClave);
+
+    @RestResource(rel = "search", path = "getKeyMovimiento")
     @Query(value = "SELECT nextval('movimiento_idempotencia_clave_seq')", nativeQuery = true)
     Long getMovimientoIdempotenciaClaveSequenceValue();
 
-    @RestResource(rel = "search", exported = true)
-    default KeyResponseDto getKeyMovimiento() {
-        Long value = getMovimientoIdempotenciaClaveSequenceValue();
-        return new KeyResponseDto(value);
-    }
 }

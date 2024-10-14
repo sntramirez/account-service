@@ -1,4 +1,4 @@
-package com.dev.accountservice.domain.core.model;
+package com.dev.accountservice.exceptions;
 
 import org.springframework.validation.BindingResult;
 

@@ -1,4 +1,4 @@
-package com.dev.accountservice.domain.core.model;
+package com.dev.accountservice.exceptions;
 
 public class SaldoNoDisponibleException extends RuntimeException {
     public SaldoNoDisponibleException(String message) {

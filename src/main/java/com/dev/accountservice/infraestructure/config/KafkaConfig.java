@@ -1,4 +1,4 @@
-package com.dev.accountservice.application.api.config;
+package com.dev.accountservice.infraestructure.config;
 
 import com.dev.accountservice.domain.core.model.RespuestaMovimiento;
 import com.dev.accountservice.domain.core.model.RespuestaMovimientoSerializer;

@@ -13,12 +13,16 @@ import java.time.LocalDate;
 @Setter
 public class MovimientoDto {
 
-    @NotBlank(message = "El número de cuenta es obligatorio")
+    @NotBlank(message = "Campo obligatorio")
     private String numeroCuenta;
     private LocalDate fecha;
     @Pattern(regexp = "^(Retiro|Deposito)$", message = "El tipo de movimiento debe ser 'Retiro' o 'Deposito'")
     private String tipoMovimiento;
-    @NotNull(message = "El valor es obligatorio")
+    @NotNull(message = "Campo obligatorio")
     private BigDecimal valor;
     private BigDecimal saldo;
+
+    @NotBlank(message = "Campo obligatorio")
+    private String idempotenciaClave;
+
 }
