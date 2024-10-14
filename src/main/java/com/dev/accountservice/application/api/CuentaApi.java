@@ -1,6 +1,7 @@
 package com.dev.accountservice.application.api;
 
-import com.dev.accountservice.domain.core.CuentaServicio;
+
+import com.dev.accountservice.application.services.CuentaServicio;
 import com.dev.accountservice.domain.core.model.CuentaDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

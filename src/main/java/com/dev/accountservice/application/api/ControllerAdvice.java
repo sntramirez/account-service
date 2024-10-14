@@ -1,4 +1,4 @@
-package com.dev.accountservice.application.api.advice;
+package com.dev.accountservice.application.api;
 
 import com.dev.accountservice.domain.core.model.ErrorDto;
 import com.dev.accountservice.domain.core.model.ValidationException;

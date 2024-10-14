@@ -4,6 +4,7 @@ import com.dev.accountservice.domain.core.mapper.CuentaMapper;
 import com.dev.accountservice.domain.core.model.CuentaDto;
 import com.dev.accountservice.domain.core.model.RespuestaMovimiento;
 import com.dev.accountservice.domain.core.model.SolicitudCreacionCuenta;
+import com.dev.accountservice.domain.core.ports.CuentaPort;
 import com.dev.accountservice.infraestructure.data.entities.Cuenta;
 import com.dev.accountservice.infraestructure.data.repository.CuentaRepository;
 import org.slf4j.Logger;
@@ -14,7 +15,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CuentaServicio {
+public class CuentaServicio implements CuentaPort {
 
 
     private static final Logger log = LoggerFactory.getLogger(CuentaServicio.class);
@@ -30,6 +31,7 @@ public class CuentaServicio {
     private CuentaMapper cuentaMapper;
 
 
+    @Override
     public CuentaDto crearCuenta(CuentaDto cuentaDto) {
         Cuenta cuenta = cuentaRepository.save(cuentaMapper.convertToCuenta(cuentaDto));
         return cuentaMapper.convertToCuentaDto(cuenta);

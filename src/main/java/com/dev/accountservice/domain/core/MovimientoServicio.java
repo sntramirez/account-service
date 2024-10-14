@@ -3,6 +3,7 @@ package com.dev.accountservice.domain.core;
 import com.dev.accountservice.domain.core.model.MovimientoDto;
 import com.dev.accountservice.domain.core.model.RespuestaMovimiento;
 import com.dev.accountservice.domain.core.model.SaldoNoDisponibleException;
+import com.dev.accountservice.domain.core.ports.MovimientoPort;
 import com.dev.accountservice.infraestructure.data.entities.Cuenta;
 import com.dev.accountservice.infraestructure.data.entities.Movimiento;
 import com.dev.accountservice.infraestructure.data.repository.CuentaRepository;
@@ -17,7 +18,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class MovimientoServicio {
+public class MovimientoServicio implements MovimientoPort {
 
     private static final Logger log = LoggerFactory.getLogger(MovimientoServicio.class);
 
@@ -27,7 +28,7 @@ public class MovimientoServicio {
     @Autowired
     private MovimientoRepository movimientoRepository;
 
-
+    @Override
     public RespuestaMovimiento crearMovimento(MovimientoDto movimientoDto) {
 
         Cuenta cuenta = cuentaRepository.findByNumeroCuenta(movimientoDto.getNumeroCuenta());

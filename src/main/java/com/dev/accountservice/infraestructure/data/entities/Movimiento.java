@@ -34,4 +34,7 @@ public class Movimiento {
 
     @Column(name = "saldo")
     private BigDecimal saldo;
+
+    @Column(name = "idempotencia_clave")
+    private String idempotenciaClave;
 }

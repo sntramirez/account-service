@@ -1,5 +1,6 @@
 package com.dev.accountservice.infraestructure.data.repository;
 
+import com.dev.accountservice.domain.core.model.KeyResponseDto;
 import com.dev.accountservice.infraestructure.data.entities.Movimiento;
 import com.dev.accountservice.infraestructure.data.entities.QMovimiento;
 import com.querydsl.core.types.dsl.StringExpression;
@@ -39,6 +40,16 @@ public interface MovimientoRepository extends JpaRepository<Movimiento, Long>,
             "  and a.fecha>= :createDateFrom " +
             "  and a.fecha<= :createDateTo    " +
             "  order by a.fecha desc ")
-    List<Movimiento> findByCuentaFecha(@Param("cuentaId") Long cuentaId ,@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createDateFrom,
+    List<Movimiento> findByCuentaFecha(@Param("cuentaId") Long cuentaId, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createDateFrom,
                                        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createDateTo);
+
+    @RestResource(exported = false)
+    @Query(value = "SELECT nextval('movimiento_idempotencia_clave_seq')", nativeQuery = true)
+    Long getMovimientoIdempotenciaClaveSequenceValue();
+
+    @RestResource(rel = "search", exported = true)
+    default KeyResponseDto getKeyMovimiento() {
+        Long value = getMovimientoIdempotenciaClaveSequenceValue();
+        return new KeyResponseDto(value);
+    }
 }
