@@ -1,13 +1,14 @@
 package com.dev.accountservice.domain.core;
 
 import com.dev.accountservice.application.dto.TipoMovimiento;
+import com.dev.accountservice.domain.core.ports.CuentaPort;
+import com.dev.accountservice.domain.core.ports.MovimientoPort;
 import com.dev.accountservice.exceptions.CuentaNoDisponibleException;
 import com.dev.accountservice.exceptions.OperacionDuplicadaException;
 import com.dev.accountservice.exceptions.TipoMovimientoInvalidoException;
 import com.dev.accountservice.infraestructure.data.entities.Cuenta;
 import com.dev.accountservice.infraestructure.data.entities.Movimiento;
 import com.dev.accountservice.infraestructure.data.repository.CuentaRepository;
-import com.dev.accountservice.infraestructure.data.repository.MovimientoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,17 +22,18 @@ import java.util.Map;
 
 @Service
 public class MovimientoService {
-    private final MovimientoRepository movimientoRepository;
-    private final CuentaRepository cuentaRepository;
+
+    private final MovimientoPort movimientoPort;
+    private final CuentaPort cuentaPort;
     private final List<MovimientoObserver> observadores = new ArrayList<>();
     private final ValidadorOperacion validadorCadena;
     private final Map<String, OperacionStrategy> estrategias;
 
     @Autowired
-    public MovimientoService(MovimientoRepository movimientoRepository,
-                             CuentaRepository cuentaRepository) {
-        this.movimientoRepository = movimientoRepository;
-        this.cuentaRepository = cuentaRepository;
+    public MovimientoService(MovimientoPort movimientoPort,
+                             CuentaPort cuentaPort) {
+        this.movimientoPort = movimientoPort;
+        this.cuentaPort = cuentaPort;
 
         // Configurar Chain of Responsibility
         ValidadorSaldoSuficiente validadorSaldo = new ValidadorSaldoSuficiente();
@@ -51,7 +53,7 @@ public class MovimientoService {
 
     @Transactional
     public Movimiento realizarMovimiento(String numeroCuenta, BigDecimal monto, String tipoMovimiento) {
-        Cuenta cuenta = cuentaRepository.findByNumeroCuenta(numeroCuenta)
+        Cuenta cuenta = cuentaPort.findByNumeroCuenta(numeroCuenta)
                 .orElseThrow(() -> new CuentaNoDisponibleException("Cuenta no encontrada"));
 
         OperacionStrategy estrategia = estrategias.get(tipoMovimiento);
@@ -63,7 +65,7 @@ public class MovimientoService {
         OperacionCommand comando = new OperacionCommand(cuenta, monto, estrategia, timestamp);
         String claveIdempotencia = comando.getClaveIdempotencia();
 
-        if (movimientoRepository.findByIdempotenciaClave(claveIdempotencia).isPresent()) {
+        if (movimientoPort.findByIdempotenciaClave(claveIdempotencia).isPresent()) {
             throw new OperacionDuplicadaException("Esta operación esta siendo procesada");
         }
 
@@ -78,8 +80,8 @@ public class MovimientoService {
 
         try {
             comando.ejecutar();
-            Movimiento movimientoGuardado = movimientoRepository.save(movimiento);
-            cuentaRepository.save(cuenta);
+            Movimiento movimientoGuardado = movimientoPort.crearMovimento(movimiento);
+            cuentaPort.crearCuenta(cuenta);
 
             for (MovimientoObserver observador : observadores) {
                 observador.notificar(movimientoGuardado);
