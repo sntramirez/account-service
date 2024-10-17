@@ -1,6 +1,5 @@
 package com.dev.accountservice.infraestructure.data.repository;
 
-import com.dev.accountservice.domain.core.model.KeyResponseDto;
 import com.dev.accountservice.infraestructure.data.entities.Movimiento;
 import com.dev.accountservice.infraestructure.data.entities.QMovimiento;
 import com.querydsl.core.types.dsl.StringExpression;

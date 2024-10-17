@@ -2,8 +2,7 @@ package com.dev.accountservice.application.api;
 
 
 import com.dev.accountservice.application.services.MovimientoApplicationService;
-import com.dev.accountservice.domain.core.model.MovimientoDto;
-import lombok.extern.slf4j.Slf4j;
+import com.dev.accountservice.application.dto.MovimientoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-@Slf4j
+
 @RestController
 @RequestMapping("/movimientos")
 public class MovimientoApi {

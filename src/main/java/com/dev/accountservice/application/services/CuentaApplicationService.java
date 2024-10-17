@@ -1,7 +1,7 @@
 package com.dev.accountservice.application.services;
 
-import com.dev.accountservice.domain.core.model.CuentaDto;
-import com.dev.accountservice.domain.core.ports.CuentaPort;
+import com.dev.accountservice.application.dto.CuentaDto;
+import com.dev.accountservice.domain.core.CuentaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 public class CuentaApplicationService {
 
     @Autowired
-    CuentaPort cuentaPort;
+    CuentaServicio cuentaServicio;
 
     public CuentaDto crearCuenta(CuentaDto cuentaDto) {
-        return cuentaPort.crearCuenta(cuentaDto );
+        return cuentaServicio.crearCuenta(cuentaDto );
     }
 }

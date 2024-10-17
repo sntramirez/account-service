@@ -1,12 +1,11 @@
 package com.dev.accountservice.domain.core;
 
-import com.dev.accountservice.domain.core.mapper.CuentaMapper;
-import com.dev.accountservice.domain.core.model.CuentaDto;
-import com.dev.accountservice.domain.core.model.RespuestaMovimiento;
-import com.dev.accountservice.domain.core.model.SolicitudCreacionCuenta;
+import com.dev.accountservice.application.dto.CuentaDto;
+import com.dev.accountservice.application.dto.RespuestaMovimiento;
+import com.dev.accountservice.application.dto.SolicitudCreacionCuenta;
 import com.dev.accountservice.domain.core.ports.CuentaPort;
 import com.dev.accountservice.infraestructure.data.entities.Cuenta;
-import com.dev.accountservice.infraestructure.data.repository.CuentaRepository;
+import com.dev.accountservice.infraestructure.mapper.CuentaMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +14,13 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CuentaServicio implements CuentaPort {
+public class CuentaServicio  {
 
 
     private static final Logger log = LoggerFactory.getLogger(CuentaServicio.class);
 
     @Autowired
-    private CuentaRepository cuentaRepository;
+    private CuentaPort cuentaPort;
 
 
     @Autowired
@@ -31,9 +30,8 @@ public class CuentaServicio implements CuentaPort {
     private CuentaMapper cuentaMapper;
 
 
-    @Override
     public CuentaDto crearCuenta(CuentaDto cuentaDto) {
-        Cuenta cuenta = cuentaRepository.save(cuentaMapper.convertToCuenta(cuentaDto));
+        Cuenta cuenta = cuentaPort.crearCuenta(cuentaMapper.convertToCuenta(cuentaDto));
         return cuentaMapper.convertToCuentaDto(cuenta);
     }
 
@@ -46,7 +44,7 @@ public class CuentaServicio implements CuentaPort {
         cuentaDto.setClienteId(solicitud.getClienteId());
         cuentaDto.setEstado(true);
 
-        Cuenta cuenta = cuentaRepository.save(cuentaMapper.convertToCuenta(cuentaDto));
+        Cuenta cuenta = cuentaPort.crearCuenta(cuentaMapper.convertToCuenta(cuentaDto));
 
         log.info("Numero de cuenta: ", cuenta.getNumeroCuenta());
     }

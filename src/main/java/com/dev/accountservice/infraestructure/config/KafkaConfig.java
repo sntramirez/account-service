@@ -1,9 +1,9 @@
 package com.dev.accountservice.infraestructure.config;
 
-import com.dev.accountservice.domain.core.model.RespuestaMovimiento;
-import com.dev.accountservice.domain.core.model.RespuestaMovimientoSerializer;
-import com.dev.accountservice.domain.core.model.SolicitudCreacionCuenta;
-import com.dev.accountservice.domain.core.model.SolicitudCreacionCuentaSerializer;
+import com.dev.accountservice.application.dto.RespuestaMovimiento;
+import com.dev.accountservice.application.dto.RespuestaMovimientoSerializer;
+import com.dev.accountservice.application.dto.SolicitudCreacionCuenta;
+import com.dev.accountservice.application.dto.SolicitudCreacionCuentaSerializer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;

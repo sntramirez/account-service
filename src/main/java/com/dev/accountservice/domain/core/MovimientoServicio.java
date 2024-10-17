@@ -1,7 +1,7 @@
 package com.dev.accountservice.domain.core;
 
-import com.dev.accountservice.domain.core.model.MovimientoDto;
-import com.dev.accountservice.domain.core.model.RespuestaMovimiento;
+import com.dev.accountservice.application.dto.MovimientoDto;
+import com.dev.accountservice.application.dto.RespuestaMovimiento;
 import com.dev.accountservice.exceptions.CuentaNoDisponibleException;
 import com.dev.accountservice.exceptions.SaldoNoDisponibleException;
 import com.dev.accountservice.domain.core.ports.MovimientoPort;

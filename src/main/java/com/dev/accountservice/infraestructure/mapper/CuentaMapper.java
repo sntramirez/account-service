@@ -1,6 +1,6 @@
-package com.dev.accountservice.domain.core.mapper;
+package com.dev.accountservice.infraestructure.mapper;
 
-import com.dev.accountservice.domain.core.model.CuentaDto;
+import com.dev.accountservice.application.dto.CuentaDto;
 import com.dev.accountservice.infraestructure.data.entities.Cuenta;
 import com.dev.accountservice.infraestructure.data.repository.CuentaRepository;
 import org.springframework.beans.factory.annotation.Autowired;

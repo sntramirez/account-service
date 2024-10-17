@@ -1,6 +1,6 @@
 package com.dev.accountservice.exceptions;
 
-import com.dev.accountservice.domain.core.model.ErrorDto;
+import com.dev.accountservice.application.dto.ErrorDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

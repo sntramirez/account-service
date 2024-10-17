@@ -1,7 +1,7 @@
 package com.dev.accountservice.application.services;
 
-import com.dev.accountservice.domain.core.model.MovimientoDto;
-import com.dev.accountservice.domain.core.model.RespuestaMovimiento;
+import com.dev.accountservice.application.dto.MovimientoDto;
+import com.dev.accountservice.application.dto.RespuestaMovimiento;
 import com.dev.accountservice.domain.core.ports.MovimientoPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
