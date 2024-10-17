@@ -19,8 +19,8 @@ public class CuentaServicio  {
 
     private static final Logger log = LoggerFactory.getLogger(CuentaServicio.class);
 
-    @Autowired
-    private CuentaPort cuentaPort;
+    //@Autowired
+    //private CuentaPort cuentaPort;
 
 
     @Autowired
@@ -31,8 +31,8 @@ public class CuentaServicio  {
 
 
     public CuentaDto crearCuenta(CuentaDto cuentaDto) {
-        Cuenta cuenta = cuentaPort.crearCuenta(cuentaMapper.convertToCuenta(cuentaDto));
-        return cuentaMapper.convertToCuentaDto(cuenta);
+       // Cuenta cuenta = cuentaPort.crearCuenta(cuentaMapper.convertToCuenta(cuentaDto));
+        return null;// cuentaMapper.convertToCuentaDto(cuenta);
     }
 
 
@@ -44,9 +44,9 @@ public class CuentaServicio  {
         cuentaDto.setClienteId(solicitud.getClienteId());
         cuentaDto.setEstado(true);
 
-        Cuenta cuenta = cuentaPort.crearCuenta(cuentaMapper.convertToCuenta(cuentaDto));
+       // Cuenta cuenta = cuentaPort.crearCuenta(cuentaMapper.convertToCuenta(cuentaDto));
 
-        log.info("Numero de cuenta: ", cuenta.getNumeroCuenta());
+       // log.info("Numero de cuenta: ", cuenta.getNumeroCuenta());
     }
 
 
